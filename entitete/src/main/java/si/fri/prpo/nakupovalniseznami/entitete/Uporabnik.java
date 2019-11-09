@@ -8,7 +8,8 @@ import java.util.List;
 @Table(name = "uporabnik")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Uporabnik.getAll", query = "SELECT u from Uporabnik u")
+                @NamedQuery(name = "Uporabnik.getAll", query = "SELECT u from Uporabnik u"),
+                @NamedQuery(name = "Uporabnik.getUCompletedP",query = "select u from Uporabnik u, NakupovalniSeznam  n where n.uporabnik = u and n.opravljeno = 'DA'")
         })
 
 public class Uporabnik {
@@ -29,7 +30,7 @@ public class Uporabnik {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "uporabnik_id")
+    @OneToMany(mappedBy = "uporabnik")
     private List<NakupovalniSeznam> nakupovalniSeznami;
 
     public Integer getId() {

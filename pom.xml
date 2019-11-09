@@ -22,9 +22,6 @@
         <module>api</module>
         <module>storitve</module>
         <module>entitete</module>
-        <module>api</module>
-        <module>storitve</module>
-        <module>entitete</module>
     </modules>
 
     <dependencyManagement>
@@ -40,8 +37,6 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>si.fri.prpo.nakupovalniseznami</groupId>

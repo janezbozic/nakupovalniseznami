@@ -1,6 +1,7 @@
 package si.fri.prpo.nakupovalniseznami.entitete;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "popust")
@@ -15,33 +16,33 @@ public class Popust {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "popust")
-    private Integer popust;
+    @Column(name = "velikost")
+    private Integer velikost;
 
-    @OneToMany(mappedBy = "popust_id")
-    private Artikel artikel;
+    @OneToMany(mappedBy = "popust")
+    private List<Artikel> artikel;
 
     public Integer getId() {
         return id;
     }
 
-    public Artikel getArtikel() {
+    public List<Artikel> getArtikel() {
         return artikel;
     }
 
-    public Integer getPopust() {
-        return popust;
+    public Integer getVelikost() {
+        return velikost;
     }
 
-    public void setPopust(Integer popust) {
-        this.popust = popust;
+    public void setVelikost(Integer velikost) {
+        this.velikost = velikost;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setArtikel(Artikel artikel) {
+    public void setArtikel(List<Artikel> artikel) {
         this.artikel = artikel;
     }
 }

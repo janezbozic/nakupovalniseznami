@@ -7,7 +7,8 @@ import java.util.List;
 @Table(name = "artikel")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "Artikel.getAll", query = "SELECT n from Artikel n")
+                @NamedQuery(name = "Artikel.getAll", query = "SELECT n from Artikel n"),
+                @NamedQuery(name = "Artikel.getPopustFromId", query = "select n from Artikel n where n.popust.id = :iskanId")
         })
 
 public class Artikel {
@@ -25,7 +26,7 @@ public class Artikel {
     @Column(name = "zaloga")
     private Integer zaloga;
 
-    @ManyToMany(mappedBy = "artikel_id")
+    @ManyToMany(mappedBy = "artikli")
     private List<NakupovalniSeznam> nakupovalniSeznami;
 
     @ManyToOne

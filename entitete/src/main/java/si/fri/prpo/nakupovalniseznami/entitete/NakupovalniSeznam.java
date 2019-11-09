@@ -7,7 +7,8 @@ import java.util.List;
 @Table(name = "nakupovalni_seznam")
 @NamedQueries(value =
         {
-             @NamedQuery(name = "NakupovalniSeznam.getAll", query = "SELECT n from NakupovalniSeznam n")
+             @NamedQuery(name = "NakupovalniSeznam.getAll", query = "SELECT n from NakupovalniSeznam n"),
+             @NamedQuery(name = "NakupovalniSeznam.getFromId", query = "select n from NakupovalniSeznam n where n.id = :iskanId"),
         })
 public class NakupovalniSeznam {
 
@@ -22,9 +23,10 @@ public class NakupovalniSeznam {
     @JoinColumn(name = "uporabnik_id")
     private Uporabnik uporabnik;
 
+    @ManyToMany
     @JoinTable(name = "artikel_seznama",
-        joinColumns = @JoinColumn(name = "nakupovalni_seznam_id"),
-        inverseJoinColumns = @JoinColumn(name = "artikel_id")
+        joinColumns = @JoinColumn(name = "nakupovalni_seznam"),
+        inverseJoinColumns = @JoinColumn(name = "artikel")
     )
     private List<Artikel> artikli;
 
