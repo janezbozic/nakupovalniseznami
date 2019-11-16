@@ -1,15 +1,15 @@
 package si.fri.prpo.nakupovalniseznami.zrno;
 
 import si.fri.prpo.nakupovalniseznami.entitete.Artikel;
-import si.fri.prpo.nakupovalniseznami.entitete.NakupovalniSeznam;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.transaction.TransactionScoped;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,23 +18,62 @@ public class ArtikelZrno {
 
     private Logger log = Logger.getLogger(ArtikelZrno.class.getName());
 
+    @PostConstruct
+    private void init(){
+        log.info("Inicializacija zrna: " + ArtikelZrno.class.getSimpleName());
+    }
+
+    @PreDestroy
+    private void destros(){
+        log.info("Deinicializacija zrna: " + ArtikelZrno.class.getSimpleName());
+    }
+
     @PersistenceContext(unitName = "nakupovalni-seznami-jpa")
     private EntityManager em;
 
-    public List<Object> pridobiArtikleCriteriaAPI(){
-
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<Object> criteriaQuery = criteriaBuilder.createQuery();
-        Root<Artikel> from = criteriaQuery.from(Artikel.class);
-        CriteriaQuery<Object> select = criteriaQuery.select(from);
-        TypedQuery<Object> typedQuery = em.createQuery(select);
-        return typedQuery.getResultList();
-
-    }
-
     public List<Artikel> pridobiArtikle(){
         List<Artikel> artikli = em.createNamedQuery("Artikel.getAll").getResultList();
-        //List<Artikel> artikli = em.createNamedQuery("Artikel.getPopustFromId").setParameter("iskanId", 1).getResultList();
         return artikli;
     }
+
+    public Artikel pridobiArtikel(int artikelId){
+
+        Artikel artikel = em.find(Artikel.class, artikelId);
+
+        return artikel;
+
+    }
+
+    @Transactional
+    public Artikel dodajArtikel(Artikel artikel){
+
+        if (artikel != null)
+            em.persist(artikel);
+
+        return artikel;
+
+    }
+
+    @Transactional
+    public void posodobiArtikel(int artikelId, Artikel artikel){
+
+        Artikel starArtikel = pridobiArtikel(artikelId);
+
+        artikel.setId(starArtikel.getId());
+        em.merge(artikel);
+
+    }
+
+    @Transactional
+    public Integer odstraniArtikel(int artikelId){
+
+        Artikel artikel = pridobiArtikel(artikelId);
+
+        if (artikel != null)
+            em.remove(artikel);
+
+        return artikelId;
+
+    }
+
 }

@@ -64,4 +64,21 @@ public class Uporabnik {
     public void setNakupovalniSeznami(List<NakupovalniSeznam> nakupovalniSeznami) {
         this.nakupovalniSeznami = nakupovalniSeznami;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUporabniskoIme() {
+        return uporabniskoIme;
+    }
+
+    public void setUporabniskoIme(String uporabniskoIme) {
+        this.uporabniskoIme = uporabniskoIme;
+    }
+
 }

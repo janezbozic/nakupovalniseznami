@@ -1,6 +1,7 @@
 package si.fri.prpo.nakupovalniseznami.entitete;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,9 @@ public class NakupovalniSeznam {
 
     @Column(name = "opravljeno")
     private String opravljeno;
+
+    @Column(name = "ustvarjen")
+    private Instant ustvarjen;
 
     @ManyToOne
     @JoinColumn(name = "uporabnik_id")
@@ -62,4 +66,11 @@ public class NakupovalniSeznam {
         this.uporabnik = uporabnik;
     }
 
+    public Instant getUstvarjen() {
+        return ustvarjen;
+    }
+
+    public void setUstvarjen(Instant ustvarjen) {
+        this.ustvarjen = ustvarjen;
+    }
 }
