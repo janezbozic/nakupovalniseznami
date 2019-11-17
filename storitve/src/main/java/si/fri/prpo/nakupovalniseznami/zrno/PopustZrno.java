@@ -45,8 +45,11 @@ public class PopustZrno {
     @Transactional
     public Popust dodajPopust(Popust p){
 
-        if (p != null)
+        if (p != null) {
+            em.getTransaction().begin();
             em.persist(p);
+            em.getTransaction().commit();
+        }
 
         return p;
 

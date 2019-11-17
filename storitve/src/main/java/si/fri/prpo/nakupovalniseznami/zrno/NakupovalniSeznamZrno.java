@@ -4,27 +4,29 @@ import si.fri.prpo.nakupovalniseznami.entitete.NakupovalniSeznam;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.print.attribute.standard.MediaSize;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
-@ApplicationScoped
+@RequestScoped
 public class NakupovalniSeznamZrno {
 
+    private String idZrna;
     private Logger log = Logger.getLogger(NakupovalniSeznamZrno.class.getName());
 
     @PostConstruct
     private void init(){
-        log.info("Inicializacija zrna: " + NakupovalniSeznamZrno.class.getSimpleName());
+        idZrna = UUID.randomUUID().toString();
+        log.info("Inicializacija zrna: " +" "+ NakupovalniSeznamZrno.class.getSimpleName() + " id zrna: "+ idZrna);
     }
 
     @PreDestroy
     private void destros(){
-        log.info("Deinicializacija zrna: " + NakupovalniSeznamZrno.class.getSimpleName());
+        log.info("Deinicializacija zrna: " +" "+ NakupovalniSeznamZrno.class.getSimpleName() + " id zrna: "+ idZrna);
     }
 
     @PersistenceContext(unitName = "nakupovalni-seznami-jpa")

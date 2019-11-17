@@ -5,10 +5,8 @@ import si.fri.prpo.nakupovalniseznami.entitete.Artikel;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.TransactionScoped;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
@@ -47,8 +45,11 @@ public class ArtikelZrno {
     @Transactional
     public Artikel dodajArtikel(Artikel artikel){
 
-        if (artikel != null)
+        if (artikel != null) {
+            em.getTransaction().begin();
             em.persist(artikel);
+            em.getTransaction().commit();
+        }
 
         return artikel;
 

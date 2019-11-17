@@ -45,11 +45,12 @@ public class UporabnikZrno {
     @Transactional
     public Uporabnik dodajUporabnika(Uporabnik up) {
 
-        if (up != null)
+        if (up != null) {
+            em.getTransaction().begin();
             em.persist(up);
-
+            em.getTransaction().commit();
+        }
         return up;
-
     }
 
     @Transactional

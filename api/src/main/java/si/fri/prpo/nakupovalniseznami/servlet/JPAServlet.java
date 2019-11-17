@@ -43,10 +43,13 @@ public class JPAServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        // Dodajanje novega nakupovalnega seznama
+        //======================================================================================================================================================
         List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
         NakupovalniSeznam n = upravljanjeNakupovalnihSeznamovZrno.ustvariNakupovalniSeznam(new NakupovalniSeznamData("DA", Instant.now(), 1, list));
+        //======================================================================================================================================================
 
         List<Uporabnik> uporabniki = uporabnikZrno.pridobiUporabnike();
 
@@ -63,7 +66,6 @@ public class JPAServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
 
         writer.append("Uporabniki:<br/>");
-
         uporabniki.stream().forEach(u -> writer.append(u.getId() + " " + u.getIme() + " " + u.getPriimek() + "<br/>"));
 
         writer.append("NakupovalniSeznami:<br/>");
