@@ -4,6 +4,8 @@ public class PopustData {
 
     private int velikost;
 
+    public PopustData(){}
+
     public PopustData(int v){
         velikost = v;
     }

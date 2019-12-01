@@ -7,6 +7,8 @@ public class ArtikelData {
     private int zaloga;
     private int popust;
 
+    public ArtikelData(){}
+
     public ArtikelData (String i, double c, int z, int p){
         ime = i;
         cena = c;

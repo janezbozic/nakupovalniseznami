@@ -4,6 +4,8 @@ public class UporabnikData {
 
     private String ime, priimek, uporabniskoIme, email;
 
+    public UporabnikData(){}
+
     public UporabnikData(String i, String p, String up, String e){
         ime = i;
         priimek = p;

@@ -28,7 +28,6 @@ public class NakupovalniSeznam {
     @JoinColumn(name = "uporabnik_id")
     private Uporabnik uporabnik;
 
-    @JsonbTransient
     @ManyToMany
     @JoinTable(name = "artikel_seznama",
         joinColumns = @JoinColumn(name = "nakupovalni_seznam"),

@@ -11,6 +11,8 @@ public class NakupovalniSeznamData {
     private int uporabnik;
     private List<Integer> artikli;
 
+    public NakupovalniSeznamData(){}
+
     public NakupovalniSeznamData(String op, Instant us, int u, List<Integer> a){
         opravljeno = op;
         ustvarjen = us;
