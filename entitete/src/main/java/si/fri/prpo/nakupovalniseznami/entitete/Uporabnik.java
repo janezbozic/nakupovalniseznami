@@ -1,5 +1,6 @@
 package si.fri.prpo.nakupovalniseznami.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class Uporabnik {
     @Column(name = "email")
     private String email;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "uporabnik")
     private List<NakupovalniSeznam> nakupovalniSeznami;
 

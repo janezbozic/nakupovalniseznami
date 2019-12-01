@@ -5,6 +5,7 @@ import si.fri.prpo.nakupovalniseznami.entitete.NakupovalniSeznam;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -32,11 +33,13 @@ public class NakupovalniSeznamZrno {
     @PersistenceContext(unitName = "nakupovalni-seznami-jpa")
     private EntityManager em;
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     public List<NakupovalniSeznam> pridobiNakupovalneSezname(){
         List<NakupovalniSeznam> nakupovalniSeznami = em.createNamedQuery("NakupovalniSeznam.getAll").getResultList();
         return nakupovalniSeznami;
     }
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     public NakupovalniSeznam pridobiNakupovalniSeznam(int nakupovalniSeznamId){
 
         NakupovalniSeznam ns = em.find(NakupovalniSeznam.class, nakupovalniSeznamId);
@@ -45,6 +48,7 @@ public class NakupovalniSeznamZrno {
 
     }
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     @Transactional
     public NakupovalniSeznam dodajNakupovalniSeznam(NakupovalniSeznam nakupovalniSeznam){
 
@@ -58,16 +62,20 @@ public class NakupovalniSeznamZrno {
 
     }
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     @Transactional
-    public void posodobiNakupovalniSeznam(int id, NakupovalniSeznam ns){
+    public NakupovalniSeznam posodobiNakupovalniSeznam(int id, NakupovalniSeznam ns){
 
         NakupovalniSeznam starNS = pridobiNakupovalniSeznam(id);
 
         ns.setId(starNS.getId());
         em.merge(ns);
 
+        return ns;
+
     }
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     @Transactional
     public Integer odstraniNakupovalniSeznam(int id){
 

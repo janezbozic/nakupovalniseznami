@@ -1,5 +1,6 @@
 package si.fri.prpo.nakupovalniseznami.entitete;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
@@ -27,6 +28,7 @@ public class NakupovalniSeznam {
     @JoinColumn(name = "uporabnik_id")
     private Uporabnik uporabnik;
 
+    @JsonbTransient
     @ManyToMany
     @JoinTable(name = "artikel_seznama",
         joinColumns = @JoinColumn(name = "nakupovalni_seznam"),

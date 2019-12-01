@@ -108,7 +108,7 @@ public class UpravljanjeNakupovalnihSeznamovZrno {
         Popust popust = popustZrno.pridobiPopust(ad.getPopust());
 
         if (popust == null){
-            log.info("Popusta ni mogoce najti. Ni bilo mogoce vstaviti v bazo.");
+            log.info("Popusta ni mogoce     najti. Ni bilo mogoce vstaviti v bazo.");
             return null;
         }
 

@@ -5,6 +5,7 @@ import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -29,11 +30,13 @@ public class UporabnikZrno {
     @PersistenceContext(unitName = "nakupovalni-seznami-jpa")
     private EntityManager em;
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     public List<Uporabnik> pridobiUporabnike(){
         List<Uporabnik> uporabniki = em.createNamedQuery("Uporabnik.getAll").getResultList();
         return uporabniki;
     }
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     public Uporabnik pridobiUporabnika(int uporabnikId){
 
         Uporabnik up = em.find(Uporabnik.class, uporabnikId);
@@ -42,6 +45,7 @@ public class UporabnikZrno {
 
     }
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     @Transactional
     public Uporabnik dodajUporabnika(Uporabnik up) {
 
@@ -53,16 +57,20 @@ public class UporabnikZrno {
         return up;
     }
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     @Transactional
-    public void posodobiUporabnika (int uporabnikId, Uporabnik up){
+    public Uporabnik posodobiUporabnika (int uporabnikId, Uporabnik up){
 
         Uporabnik u = pridobiUporabnika(uporabnikId);
 
         up.setId(u.getId());
         em.merge(up);
 
+        return up;
+
     }
 
+    @Interceptors(BelezenjeKlicevZrno.class)
     @Transactional
     public Integer odstraniUporabnika(int uporabnikId){
 

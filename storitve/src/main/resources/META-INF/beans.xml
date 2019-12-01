@@ -3,3 +3,6 @@
        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_2.xsd"
        bean-discovery-mode="annotated">
 </beans>
+<interceptors>
+    <class>si.fri.prpo.nakupovalniseznami.zrno.BelezenjeKlicevZrno</class>
+</interceptors>
