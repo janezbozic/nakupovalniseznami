@@ -1,5 +1,7 @@
 package si.fri.prpo.nakupovalniseznami.zrno;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.nakupovalniseznami.anotacije.BeleziKlice;
 import si.fri.prpo.nakupovalniseznami.entitete.Artikel;
 
@@ -84,6 +86,14 @@ public class ArtikelZrno {
 
         return artikelId;
 
+    }
+
+    public List<Artikel> getArtikli(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Artikel.class, query);
+    }
+
+    public Long getArtikeliCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Artikel.class, query);
     }
 
 }

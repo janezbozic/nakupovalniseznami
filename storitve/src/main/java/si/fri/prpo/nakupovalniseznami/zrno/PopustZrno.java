@@ -1,5 +1,7 @@
 package si.fri.prpo.nakupovalniseznami.zrno;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.nakupovalniseznami.entitete.Popust;
 
 import javax.annotation.PostConstruct;
@@ -83,6 +85,14 @@ public class PopustZrno {
 
         return popustId;
 
+    }
+
+    public List<Popust> getPopust(QueryParameters query) {
+        return JPAUtils.queryEntities(em, Popust.class, query);
+    }
+
+    public Long getPopustCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, Popust.class, query);
     }
 
 }

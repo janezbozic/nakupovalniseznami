@@ -36,6 +36,21 @@
             <groupId>si.fri.prpo.nakupovalniseznami</groupId>
             <artifactId>storitve</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.rest</groupId>
+            <artifactId>kumuluzee-rest-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.openapi</groupId>
+            <artifactId>kumuluzee-openapi</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.openapi</groupId>
+            <artifactId>kumuluzee-openapi-ui</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
 

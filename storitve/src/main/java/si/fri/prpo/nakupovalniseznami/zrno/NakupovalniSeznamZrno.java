@@ -1,5 +1,7 @@
 package si.fri.prpo.nakupovalniseznami.zrno;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.prpo.nakupovalniseznami.entitete.NakupovalniSeznam;
 
 import javax.annotation.PostConstruct;
@@ -86,5 +88,13 @@ public class NakupovalniSeznamZrno {
 
         return id;
 
+    }
+
+    public List<NakupovalniSeznam> getNakupovalniSeznami(QueryParameters query) {
+        return JPAUtils.queryEntities(em, NakupovalniSeznam.class, query);
+    }
+
+    public Long getNakupovalniSeznamiCount(QueryParameters query) {
+        return JPAUtils.queryEntitiesCount(em, NakupovalniSeznam.class, query);
     }
 }

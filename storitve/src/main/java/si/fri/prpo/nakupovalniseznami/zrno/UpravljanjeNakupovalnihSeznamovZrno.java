@@ -8,6 +8,7 @@ import si.fri.prpo.nakupovalniseznami.entitete.Artikel;
 import si.fri.prpo.nakupovalniseznami.entitete.NakupovalniSeznam;
 import si.fri.prpo.nakupovalniseznami.entitete.Popust;
 import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
+import si.fri.prpo.nakupovalniseznami.izjeme.ManjkajociArtikelIzjema;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -63,8 +64,9 @@ public class UpravljanjeNakupovalnihSeznamovZrno {
         for (int i = 0; i<artikliId.size(); i++){
             Artikel artikel = artikelZrno.pridobiArtikel(artikliId.get(i));
             if (artikel == null){
-                log.info("Artikel ne obstaja, ne moremo vstaviti v bazo.");
-                return null;
+                String sporocilo = "Ne morem ustvariti novega nakupovalnega seznama. Artikel ne obstaja.";
+                log.severe(sporocilo);
+                throw new ManjkajociArtikelIzjema(sporocilo);
             }
             artikli.add(artikel);
         }
