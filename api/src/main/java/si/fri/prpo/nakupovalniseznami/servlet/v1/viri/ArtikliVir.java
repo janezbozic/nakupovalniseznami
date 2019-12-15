@@ -1,5 +1,6 @@
 package si.fri.prpo.nakupovalniseznami.servlet.v1.viri;
 
+import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,16 +12,18 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import si.fri.prpo.nakupovalniseznami.Data.ArtikelData;
 import si.fri.prpo.nakupovalniseznami.entitete.Artikel;
+import si.fri.prpo.nakupovalniseznami.servlet.v1.AddonExtensions.ArtikelExtended;
 import si.fri.prpo.nakupovalniseznami.zrno.ArtikelZrno;
 import si.fri.prpo.nakupovalniseznami.zrno.UpravljanjeNakupovalnihSeznamovZrno;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.*;
+import java.util.List;
 
 @ApplicationScoped
 @Path("artikli")
@@ -36,6 +39,16 @@ public class ArtikliVir {
 
     @Inject
     private UpravljanjeNakupovalnihSeznamovZrno upravljanjeNakupovalnihSeznamovZrno;
+
+    private Client httpClient;
+
+    private String baseUrl;
+
+    @PostConstruct
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+        baseUrl = ConfigurationUtil.getInstance().get("baseURL").orElse("N/A");
+    }
 
     @Operation(description = "Vrne seznam artiklov", summary = "Seznam artiklov",
             tags = "artikli", responses = {
@@ -75,8 +88,16 @@ public class ArtikliVir {
 
         Artikel artikel = artikelZrno.pridobiArtikel(id);
 
-        if (artikel != null)
-            return Response.ok(artikel).build();
+        ArtikelData predlog = httpClient
+                .target(baseUrl + "priporocenArtikel/"+artikel.getId())
+                .request().get(new GenericType<ArtikelData>() {
+        });
+
+        ArtikelExtended ae = new ArtikelExtended(artikel.getId(), artikel.getIme(), artikel.getCena(), artikel.getZaloga(), artikel.getNakupovalniSeznami(), artikel.getPopust(), predlog.getIme());
+
+        if (artikel != null) {
+            return Response.ok(ae).build();
+        }
         else
             return Response.status(Response.Status.NOT_FOUND).build();
 

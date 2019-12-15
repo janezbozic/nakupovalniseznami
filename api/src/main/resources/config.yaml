@@ -9,3 +9,16 @@ kumuluzee:
       username: postgres
       password: postgres
       max-pool-size: 20
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    checks:
+      data-source-health-check:
+        type: liveness
+        jndi-name: jdbc/NakupovalniSeznami
+      http-health-check:
+        - connection-url: http://localhost:8081/v1/priporocenArtikel/1
+        - connection-url: http://www.reddit.com
+
+baseURL: http://localhost:8081/v1/

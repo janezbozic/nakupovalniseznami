@@ -126,4 +126,10 @@ public class UpravljanjeNakupovalnihSeznamovZrno {
 
     }
 
+    public NakupovalniSeznam dodajArtikelnaSeznam(int artikelId, int seznamId){
+        NakupovalniSeznam n = nakupovalniSeznamZrno.pridobiNakupovalniSeznam(seznamId);
+        n.getArtikli().add(artikelZrno.pridobiArtikel(artikelId));
+        return n;
+    }
+
 }
