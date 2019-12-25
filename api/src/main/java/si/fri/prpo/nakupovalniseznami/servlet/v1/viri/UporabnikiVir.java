@@ -11,16 +11,14 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import si.fri.prpo.nakupovalniseznami.Data.UporabnikData;
 import si.fri.prpo.nakupovalniseznami.entitete.Uporabnik;
+import si.fri.prpo.nakupovalniseznami.servlet.v1.emailVerification.EmailVerification;
 import si.fri.prpo.nakupovalniseznami.zrno.UporabnikZrno;
 import si.fri.prpo.nakupovalniseznami.zrno.UpravljanjeNakupovalnihSeznamovZrno;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 
 @ApplicationScoped
 @Path("uporabniki")
@@ -95,10 +93,16 @@ public class UporabnikiVir {
             description = "DTO objekt za dodajanje uporabnikov.", required = true,
             content = @Content(schema = @Schema(implementation = UporabnikData.class))) UporabnikData uporabnik){
 
-        return Response
-                .status(Response.Status.CREATED)
-                .entity(upravljanjeNakupovalnihSeznamovZrno.dodajUporabnik(uporabnik))
-                .build();
+        EmailVerification ev = new EmailVerification();
+        if (ev.verEmail(uporabnik.getEmail()).getParam().get(0).equals("valid")) {
+
+            return Response.status(Response.Status.CREATED)
+                    .entity(upravljanjeNakupovalnihSeznamovZrno.dodajUporabnik(uporabnik))
+                    .build();
+
+        }
+
+        else return null;
 
     }
 
